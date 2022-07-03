@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XFxQcTNc1+6lfrJiA24xmofCdKJLj4NdWuVZpJs0Zo1h2F1FXLfE0ISrucwqetZl2v5WdkhDhpPLKjgMbSYiAQ==",
+  "dgSpecHash": "ndf8fRDlYw2YFwyINOVhmOLWbdaeR3tGFxP4g+rMLixAtixvbJtmv5bxXYSA5VgUUEkNgkqXIvIp2ITtkKO3wA==",
   "success": true,
   "projectFilePath": "E:\\GitHub\\SQLEgzaminas\\Egzaminas\\Egzaminas.csproj",
   "expectedPackageFiles": [
@@ -23,6 +23,7 @@
     "C:\\Users\\aruna\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\aruna\\.nuget\\packages\\microsoft.extensions.logging\\6.0.0\\microsoft.extensions.logging.6.0.0.nupkg.sha512",
     "C:\\Users\\aruna\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\aruna\\.nuget\\packages\\microsoft.extensions.logging.debug\\6.0.0\\microsoft.extensions.logging.debug.6.0.0.nupkg.sha512",
     "C:\\Users\\aruna\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
     "C:\\Users\\aruna\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "C:\\Users\\aruna\\.nuget\\packages\\microsoft.identity.client\\4.21.1\\microsoft.identity.client.4.21.1.nupkg.sha512",
