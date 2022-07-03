@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Egzaminas.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20220703115812_ChangedStudentIdType")]
-    partial class ChangedStudentIdType
+    [Migration("20220703120756_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

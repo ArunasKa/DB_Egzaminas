@@ -62,12 +62,7 @@ namespace Egzaminas.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("StudentId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
 
                     b.ToTable("Lectures");
                 });
@@ -92,6 +87,21 @@ namespace Egzaminas.Migrations
                     b.ToTable("Students");
                 });
 
+            modelBuilder.Entity("LectureStudent", b =>
+                {
+                    b.Property<Guid>("LecturesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StudentsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("LecturesId", "StudentsId");
+
+                    b.HasIndex("StudentsId");
+
+                    b.ToTable("LectureStudent");
+                });
+
             modelBuilder.Entity("DepartmentLecture", b =>
                 {
                     b.HasOne("Egzaminas.Entities.Department", null)
@@ -107,13 +117,6 @@ namespace Egzaminas.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Egzaminas.Entities.Lecture", b =>
-                {
-                    b.HasOne("Egzaminas.Entities.Student", null)
-                        .WithMany("Lectures")
-                        .HasForeignKey("StudentId");
-                });
-
             modelBuilder.Entity("Egzaminas.Entities.Student", b =>
                 {
                     b.HasOne("Egzaminas.Entities.Department", null)
@@ -123,14 +126,24 @@ namespace Egzaminas.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("LectureStudent", b =>
+                {
+                    b.HasOne("Egzaminas.Entities.Lecture", null)
+                        .WithMany()
+                        .HasForeignKey("LecturesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Egzaminas.Entities.Student", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Egzaminas.Entities.Department", b =>
                 {
                     b.Navigation("Students");
-                });
-
-            modelBuilder.Entity("Egzaminas.Entities.Student", b =>
-                {
-                    b.Navigation("Lectures");
                 });
 #pragma warning restore 612, 618
         }
