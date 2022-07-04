@@ -25,13 +25,36 @@ namespace Egzaminas
 
         public void AddStudent(Student student)
         {
-            throw new NotImplementedException();
+            _context.Students.Add(student);
         }
 
-        public Department GetDepartmentFromStudents(Guid departmentId)
+        public void AddLecture(Lecture lecture)
         {
-            return _context.Departments.Include(s => s.Students).FirstOrDefault(s => s.Id == departmentId);
+            _context.Lectures.Add(lecture); 
         }
+
+        public Department GetDepartmentFromStudents(string departmentName)
+        {
+            return _context.Departments.Include(s => s.Students).FirstOrDefault(s => s.Name == departmentName);
+        }
+
+        public List<Lecture> GetAllLecturesForDepartment(string departmentName)
+        {
+            var department = GetDepartmentFromLectures(departmentName);
+            var lectures = _context.Lectures.Where(s => s.Departments.All(d=>d.Id.Equals(department.Id))).ToList();
+            
+
+            return lectures;
+        }
+
+        public List<Student> GetAllStudentsForDepartment(string departmentName)
+        {
+
+            var department = GetDepartmentFromStudents( departmentName);
+            var students = _context.Students.Where(s=>s.DepartmentId.Equals(department.Id)).ToList();
+            return students;
+        }
+
         public Lecture GetLectureFromStudents(string lectureName)
         {
             return _context.Lectures.Include(s => s.Students).FirstOrDefault(s => s.Name == lectureName);
@@ -45,6 +68,9 @@ namespace Egzaminas
         {
             return _context.Students.FirstOrDefault(s => s.Name.ToUpper() == studentName.ToUpper());
         }
+
+        
+
         public Student GetStudent(Guid studentId)
         {
             return _context.Students.FirstOrDefault(s => s.Id == studentId);
@@ -61,6 +87,10 @@ namespace Egzaminas
         public void UpdateLecture(Lecture lecture)
         {
             _context.Update(lecture);
+        }
+        public void UpdateStudent(Student studentToUpdate)
+        {
+            _context.Update(studentToUpdate);
         }
     }
 }

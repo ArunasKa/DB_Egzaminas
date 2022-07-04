@@ -17,15 +17,54 @@ namespace Egzaminas
             _dbRepository.AddDepartment(department);
             _dbRepository.SaveChanges();
         }
-        public void AddStudentToDepartment(Guid departmentId, string studentName)
+        public void CreateLecture(string name)
         {
-            var department = _dbRepository.GetDepartmentFromStudents(departmentId);
-            if (department.Students.Any(d=>d.Name.Equals(studentName, StringComparison.InvariantCultureIgnoreCase)))
+            var lecture = new Lecture(name);
+            _dbRepository.AddLecture(lecture);
+            _dbRepository.SaveChanges();
+        }
+
+        public void ShowAllLecturesForDepartment(string departmentName)
+        {
+            var lectures = _dbRepository.GetAllLecturesForDepartment(departmentName);
+            foreach (var lecture in lectures)
             {
+                //Console.WriteLine($"{student.Id} {student.Name} {student.DepartmentId}");
+                Console.WriteLine(lecture.Name);
+            }
+        }
+
+        public void ShowAllStudentsForDepartment(string departmentName)
+        {
+            var Students = _dbRepository.GetAllStudentsForDepartment(departmentName);
+            foreach (var student in Students)
+            {
+                //Console.WriteLine($"{student.Id} {student.Name} {student.DepartmentId}");
+                Console.WriteLine(student.Name);
+            }
+        }
+
+        public void CreateStudent( string studentName)
+        {
+            var student = new Student(studentName);
+            _dbRepository.AddStudent(student);
+            _dbRepository.SaveChanges();
+        }
+        public void AddStudentToDepartment(string departmentName, string studentName)
+        {
+            var department = _dbRepository.GetDepartmentFromStudents(departmentName);
+            
+            if ( department.Students.Any(d=>d.Name.Equals(studentName, StringComparison.InvariantCultureIgnoreCase)))
+            {
+                Console.WriteLine("Found item");
+                var studentToUpdate = _dbRepository.GetStudent(studentName);
+                studentToUpdate.DepartmentId = department.Id;
+                _dbRepository.UpdateStudent(studentToUpdate);
+                _dbRepository.SaveChanges();
                 return;
             }
-            var studentFromDb = _dbRepository.GetStudent(studentName);
-            department.Students.Add(studentFromDb ?? new Student(studentName));
+            var studentToAdd = _dbRepository.GetStudent(studentName);
+            department.Students.Add(studentToAdd ?? new Student(studentName));
             _dbRepository.UpdateDepartment(department);
             _dbRepository.SaveChanges();
         }
