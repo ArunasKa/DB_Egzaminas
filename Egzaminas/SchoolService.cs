@@ -23,7 +23,12 @@ namespace Egzaminas
             _dbRepository.AddLecture(lecture);
             _dbRepository.SaveChanges();
         }
-
+        public void CreateStudent(string studentName)
+        {
+            var student = new Student(studentName);
+            _dbRepository.AddStudent(student);
+            _dbRepository.SaveChanges();
+        }
         public void ShowAllLecturesForDepartment(string departmentName)
         {
             var lectures = _dbRepository.GetAllLecturesForDepartment(departmentName);
@@ -33,7 +38,6 @@ namespace Egzaminas
                 Console.WriteLine(lecture.Name);
             }
         }
-
         public void ShowAllStudentsForDepartment(string departmentName)
         {
             var Students = _dbRepository.GetAllStudentsForDepartment(departmentName);
@@ -43,12 +47,14 @@ namespace Egzaminas
                 Console.WriteLine(student.Name);
             }
         }
-
-        public void CreateStudent( string studentName)
+        public void ShowAllLecturesForStudent(Guid studentId)
         {
-            var student = new Student(studentName);
-            _dbRepository.AddStudent(student);
-            _dbRepository.SaveChanges();
+            var lectures = _dbRepository.GetAllLecturesForStudent(studentId);
+
+            foreach (var lecture in lectures)
+            {
+                Console.WriteLine(lecture.Name);
+            }
         }
         public void AddStudentToDepartment(string departmentName, string studentName)
         {
@@ -63,15 +69,20 @@ namespace Egzaminas
                 _dbRepository.SaveChanges();
                 return;
             }
-            var studentToAdd = _dbRepository.GetStudent(studentName);
-            department.Students.Add(studentToAdd ?? new Student(studentName));
-            _dbRepository.UpdateDepartment(department);
-            _dbRepository.SaveChanges();
+            else
+            {
+                var studentToAdd = _dbRepository.GetStudent(studentName);
+                var lectures = _dbRepository.GetAllLecturesForDepartment(departmentName);
+                _dbRepository.AssignLecturesToStudent(studentToAdd, lectures);
+                department.Students.Add(studentToAdd ?? new Student(studentName));
+                _dbRepository.UpdateDepartment(department);
+                _dbRepository.SaveChanges();
+            }
+            
         }
         public void AddLectureToDepartment(string departmentName, string lectureName)
         {
             var department = _dbRepository.GetDepartmentFromLectures(departmentName);
-            //if (department.Lectures.Any(d => d.Name.Equals(lectureName)))
             if(department is null)
             {
                 Console.Write("No such department, Enter name: ");
@@ -85,14 +96,15 @@ namespace Egzaminas
             _dbRepository.UpdateDepartment(department);
             _dbRepository.SaveChanges();
         }
-        public void AddStudentToLecture(string studentName, Guid studentId, string lectureName)
+        public void AddStudentToLecture(string studentName, string lectureName)
         {
             var lecture = _dbRepository.GetLectureFromStudents(lectureName);
-            if (lecture.Students.Any(s=>s.Id.Equals(studentId)))
+            var student = _dbRepository.GetStudent(studentName);    
+            if (lecture.Students.Any(s=>s.Id.Equals(student.Id)))
             {
                 return;
             }
-            var studenttFromDb = _dbRepository.GetStudent(studentId);
+            var studenttFromDb = _dbRepository.GetStudent(student.Id);
             lecture.Students.Add(studenttFromDb ?? new Student(studentName));
             _dbRepository.UpdateLecture(lecture);
             _dbRepository.SaveChanges();

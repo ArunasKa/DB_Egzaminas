@@ -42,8 +42,6 @@ namespace Egzaminas
         {
             var department = GetDepartmentFromLectures(departmentName);
             var lectures = _context.Lectures.Where(s => s.Departments.All(d=>d.Id.Equals(department.Id))).ToList();
-            
-
             return lectures;
         }
 
@@ -54,7 +52,10 @@ namespace Egzaminas
             var students = _context.Students.Where(s=>s.DepartmentId.Equals(department.Id)).ToList();
             return students;
         }
-
+        public List<Lecture> GetAllLecturesForStudent(Guid studentId)
+        {
+            return _context.Lectures.Where(l => l.Students.All(d => d.Id.Equals(studentId))).ToList();
+        }
         public Lecture GetLectureFromStudents(string lectureName)
         {
             return _context.Lectures.Include(s => s.Students).FirstOrDefault(s => s.Name == lectureName);
@@ -63,6 +64,8 @@ namespace Egzaminas
         {
             return _context.Departments.Include(s => s.Lectures).FirstOrDefault(s => s.Name == departmentName);
         }
+
+        
 
         public Student GetStudent(string studentName)
         {
@@ -84,6 +87,18 @@ namespace Egzaminas
         {
             _context.Update(department);
         }
+
+        public void AssignLecturesToStudent(Student student, List<Lecture> lectures)
+        {
+            foreach (var lecture in lectures)
+            {
+                lecture.Students.Add(student ?? new Student(student.Name));
+                UpdateLecture(lecture);
+            }
+                
+                SaveChanges();
+        }
+
         public void UpdateLecture(Lecture lecture)
         {
             _context.Update(lecture);
