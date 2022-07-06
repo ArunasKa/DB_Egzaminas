@@ -72,6 +72,7 @@ namespace Egzaminas
             else
             {
                 var studentToAdd = _dbRepository.GetStudent(studentName);
+                
                 var lectures = _dbRepository.GetAllLecturesForDepartment(departmentName);
                 _dbRepository.AssignLecturesToStudent(studentToAdd, lectures);
                 department.Students.Add(studentToAdd ?? new Student(studentName));
@@ -80,6 +81,9 @@ namespace Egzaminas
             }
             
         }
+
+        
+
         public void AddLectureToDepartment(string departmentName, string lectureName)
         {
             var department = _dbRepository.GetDepartmentFromLectures(departmentName);

@@ -83,6 +83,13 @@ namespace Egzaminas
             return _context.Lectures.FirstOrDefault(s => s.Name.ToUpper() == lectureName.ToUpper());
         }
 
+        public  void DeleteStudent(string studentName)
+        {
+            var student = GetStudent(studentName);
+            _context.Students.Remove(student);
+            //_context.Lectures.Select(l => l.Students.RemoveAll(s => s.Id.Equals(student.Id)));
+        }
+
         public void UpdateDepartment(Department department)
         {
             _context.Update(department);
