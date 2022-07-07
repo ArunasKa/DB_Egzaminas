@@ -17,6 +17,14 @@ namespace Egzaminas
             _dbRepository.AddDepartment(department);
             _dbRepository.SaveChanges();
         }
+
+        public void AddLecture(string lectureName)
+        {
+            _dbRepository.AddLecture(new Lecture(lectureName));
+            _dbRepository.SaveChanges();
+
+        }
+
         public void CreateLecture(string name)
         {
             var lecture = new Lecture(name);
@@ -59,7 +67,6 @@ namespace Egzaminas
         public void AddStudentToDepartment(string departmentName, string studentName)
         {
             var department = _dbRepository.GetDepartmentFromStudents(departmentName);
-            
             if ( department.Students.Any(d=>d.Name.Equals(studentName, StringComparison.InvariantCultureIgnoreCase)))
             {
                 Console.WriteLine("Found item");
@@ -72,9 +79,6 @@ namespace Egzaminas
             else
             {
                 var studentToAdd = _dbRepository.GetStudent(studentName);
-                
-                var lectures = _dbRepository.GetAllLecturesForDepartment(departmentName);
-                _dbRepository.AssignLecturesToStudent(studentToAdd, lectures);
                 department.Students.Add(studentToAdd ?? new Student(studentName));
                 _dbRepository.UpdateDepartment(department);
                 _dbRepository.SaveChanges();
@@ -82,7 +86,18 @@ namespace Egzaminas
             
         }
 
-        
+        public void MoveStudentToDepartment(string studentName, string DepartmentName)
+        {
+            _dbRepository.DeleteStudent(studentName);
+            AddStudentToDepartment(studentName, DepartmentName);
+        }
+
+        public void AssignLectturesToStudentFromDepartment(string studentName, string departmentName)
+        {
+            var student = _dbRepository.GetStudent(studentName);
+            var lectures = _dbRepository.GetAllLecturesForDepartment(departmentName);
+            _dbRepository.AssignLecturesToStudent(student, lectures);
+        }
 
         public void AddLectureToDepartment(string departmentName, string lectureName)
         {

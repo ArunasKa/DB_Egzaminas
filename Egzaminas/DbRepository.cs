@@ -7,42 +7,41 @@ namespace Egzaminas
     public class DbRepository
     {
         private readonly SchoolDbContext _context;
-
         public DbRepository()
         {
             _context = new SchoolDbContext();
         }
-
         public void AddDepartment(Department department)
         {
             _context.Departments.Add(department);
         }
-
         public void SaveChanges()
         {
             _context.SaveChanges();
         }
-
         public void AddStudent(Student student)
         {
             _context.Students.Add(student);
         }
-
         public void AddLecture(Lecture lecture)
         {
             _context.Lectures.Add(lecture); 
         }
-
         public Department GetDepartmentFromStudents(string departmentName)
         {
             return _context.Departments.Include(s => s.Students).FirstOrDefault(s => s.Name == departmentName);
         }
-
         public List<Lecture> GetAllLecturesForDepartment(string departmentName)
         {
-            var department = GetDepartmentFromLectures(departmentName);
+            var department = GetDepartment(departmentName);
             var lectures = _context.Lectures.Where(s => s.Departments.All(d=>d.Id.Equals(department.Id))).ToList();
-            return lectures;
+            var lectures2 = _context.Lectures.SelectMany(s => s.Departments).Where(d => d.Id.Equals(department.Id)).ToList();
+            return lectures2;
+        }
+
+        private Department GetDepartment(string departmentName)
+        {
+            return _context.Departments.FirstOrDefault(s => s.Name.ToUpper() == departmentName.ToUpper());
         }
 
         public List<Student> GetAllStudentsForDepartment(string departmentName)
@@ -64,16 +63,10 @@ namespace Egzaminas
         {
             return _context.Departments.Include(s => s.Lectures).FirstOrDefault(s => s.Name == departmentName);
         }
-
-        
-
         public Student GetStudent(string studentName)
         {
             return _context.Students.FirstOrDefault(s => s.Name.ToUpper() == studentName.ToUpper());
         }
-
-        
-
         public Student GetStudent(Guid studentId)
         {
             return _context.Students.FirstOrDefault(s => s.Id == studentId);
@@ -82,19 +75,16 @@ namespace Egzaminas
         {
             return _context.Lectures.FirstOrDefault(s => s.Name.ToUpper() == lectureName.ToUpper());
         }
-
         public  void DeleteStudent(string studentName)
         {
             var student = GetStudent(studentName);
             _context.Students.Remove(student);
             //_context.Lectures.Select(l => l.Students.RemoveAll(s => s.Id.Equals(student.Id)));
         }
-
         public void UpdateDepartment(Department department)
         {
             _context.Update(department);
         }
-
         public void AssignLecturesToStudent(Student student, List<Lecture> lectures)
         {
             foreach (var lecture in lectures)
@@ -105,7 +95,6 @@ namespace Egzaminas
                 
                 SaveChanges();
         }
-
         public void UpdateLecture(Lecture lecture)
         {
             _context.Update(lecture);

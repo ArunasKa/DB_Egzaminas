@@ -14,7 +14,9 @@ namespace Egzaminas
         }
         private void Menu()
         {
+
             var schoolService = new SchoolService();
+            //schoolService.AddLecture(GetStringInput("Lecture Name"));
             while (true)
             {
                 Console.WriteLine("" +
@@ -30,6 +32,7 @@ namespace Egzaminas
                 switch (int.Parse(Console.ReadLine()))
                 {
                     case 1:
+                        
                         schoolService.CreateDepartment(GetStringInput("(Create)Department Name "));
                         Console.WriteLine("Add student to department");
                         schoolService.AddStudentToDepartment(GetStringInput("Department Name"), GetStringInput("Student Name"));
@@ -45,11 +48,13 @@ namespace Egzaminas
 
                         break;
                     case 4:
-                        schoolService.AddStudentToDepartment(GetStringInput("Department Name"), GetStringInput("Student Name"));
+                        var studentName = GetStringInput("Student Name");
+                        schoolService.CreateStudent(studentName);
+                        schoolService.AssignLectturesToStudentFromDepartment(studentName, GetStringInput("Department Name"));
 
                         break;
                     case 5:
-                        schoolService.AddStudentToDepartment(GetStringInput("Department Name"), GetStringInput("Student Name")); // assing department to student
+                        schoolService.MoveStudentToDepartment(GetStringInput("Student Name"),GetStringInput("Department Name"));
 
                         break;
                     case 6:
