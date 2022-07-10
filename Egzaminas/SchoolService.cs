@@ -18,6 +18,13 @@ namespace Egzaminas
             _dbRepository.SaveChanges();
         }
 
+        public void AddStudent(string studentName)
+        {
+            _dbRepository.AddStudent(new Student(studentName));
+            _dbRepository.SaveChanges();
+
+        }
+
         public void AddLecture(string lectureName)
         {
             _dbRepository.AddLecture(new Lecture(lectureName));
@@ -64,7 +71,7 @@ namespace Egzaminas
                 Console.WriteLine(lecture.Name);
             }
         }
-        public void AddStudentToDepartment(string departmentName, string studentName)
+        public void AddStudentToDepartment(string studentName, string departmentName)
         {
             var department = _dbRepository.GetDepartmentFromStudents(departmentName);
             if ( department.Students.Any(d=>d.Name.Equals(studentName, StringComparison.InvariantCultureIgnoreCase)))
@@ -86,7 +93,7 @@ namespace Egzaminas
             
         }
 
-        public void MoveStudentToDepartment(string studentName, string DepartmentName)
+        public void MoveStudentToDepartment( string studentName, string DepartmentName)
         {
             _dbRepository.DeleteStudent(studentName);
             AddStudentToDepartment(studentName, DepartmentName);

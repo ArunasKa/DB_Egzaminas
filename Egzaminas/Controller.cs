@@ -17,6 +17,7 @@ namespace Egzaminas
 
             var schoolService = new SchoolService();
             //schoolService.AddLecture(GetStringInput("Lecture Name"));
+            schoolService.AddStudent("Student_Name_4");
             while (true)
             {
                 Console.WriteLine("" +
@@ -27,7 +28,8 @@ namespace Egzaminas
                     "5 Perkelti studentą į kitą departamentą(bonus points jei pakeičiamos ir jo paskaitos).\n" +
                     "6 Atvaizduoti visus departamento studentus.\n" +
                     "7 Atvaizduoti visas departamento paskaitas.\n" +
-                    "8 Atvaizduoti visas paskaitas pagal studentą.\n");
+                    "8 Atvaizduoti visas paskaitas pagal studentą.\n" +
+                    "9 Exit");
 
                 switch (int.Parse(Console.ReadLine()))
                 {
@@ -54,7 +56,10 @@ namespace Egzaminas
 
                         break;
                     case 5:
-                        schoolService.MoveStudentToDepartment(GetStringInput("Student Name"),GetStringInput("Department Name"));
+                        var studentName5 = GetStringInput("Student Name");
+                        var DepartmentName5 = GetStringInput("Department Name");
+                        schoolService.MoveStudentToDepartment(studentName5, DepartmentName5);
+                        schoolService.AssignLectturesToStudentFromDepartment(studentName5, DepartmentName5);
 
                         break;
                     case 6:
@@ -68,6 +73,9 @@ namespace Egzaminas
                     case 8:
                         schoolService.ShowAllLecturesForStudent(Guid.Parse("6638C1D3-1097-4502-BC62-08DA5EA82164"));
 
+                        break;
+                    case 9:
+                        Environment.Exit(0);
                         break;
                     default:
                         Console.WriteLine("No such option");

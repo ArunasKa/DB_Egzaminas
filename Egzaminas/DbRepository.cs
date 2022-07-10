@@ -30,12 +30,13 @@ namespace Egzaminas
         public Department GetDepartmentFromStudents(string departmentName)
         {
             return _context.Departments.Include(s => s.Students).FirstOrDefault(s => s.Name == departmentName);
+            //return _context.Departments.SingleOrDefault(d => d.Name == departmentName);
         }
         public List<Lecture> GetAllLecturesForDepartment(string departmentName)
         {
             var department = GetDepartment(departmentName);
             var lectures = _context.Lectures.Where(s => s.Departments.All(d=>d.Id.Equals(department.Id))).ToList();
-            var lectures2 = _context.Lectures.SelectMany(s => s.Departments).Where(d => d.Id.Equals(department.Id)).ToList();
+            var lectures2 = _context.Lectures.Where(l => l.Departments.Any(d=>d.Id.Equals(department.Id))).ToList();
             return lectures2;
         }
 
