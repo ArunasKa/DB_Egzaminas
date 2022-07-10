@@ -27,36 +27,25 @@ namespace Egzaminas
         public void ShowAllLecturesForDepartment(string departmentName)
         {
             var lectures = _dbRepository.GetAllLecturesForDepartment(departmentName);
-            foreach (var lecture in lectures)
-            {
-                //Console.WriteLine($"{student.Id} {student.Name} {student.DepartmentId}");
-                Console.WriteLine(lecture.Name);
-            }
+            Helper.PrintOutLectureList(lectures);
         }
         public void ShowAllStudentsForDepartment(string departmentName)
         {
-            var Students = _dbRepository.GetAllStudentsForDepartment(departmentName);
-            foreach (var student in Students)
-            {
-                //Console.WriteLine($"{student.Id} {student.Name} {student.DepartmentId}");
-                Console.WriteLine(student.Name);
-            }
+            var students = _dbRepository.GetAllStudentsForDepartment(departmentName);
+            Helper.PrintOutStudentsList(students);
         }
         public void ShowAllLecturesForStudent(Guid studentId)
         {
             var lectures = _dbRepository.GetAllLecturesForStudent(studentId);
 
-            foreach (var lecture in lectures)
-            {
-                Console.WriteLine(lecture.Name);
-            }
+            Helper.PrintOutLectureList(lectures);
+
         }
-        public void AddStudentToDepartment(string studentName, string departmentName)
+        public void AddStudentToDepartment(string departmentName, string studentName)
         {
             var department = _dbRepository.GetDepartment(departmentName);
             if ( department.Students.Any(d=>d.Name.Equals(studentName, StringComparison.InvariantCultureIgnoreCase)))
             {
-                Console.WriteLine("Found item");
                 var studentToUpdate = _dbRepository.GetStudent(studentName);
                 studentToUpdate.DepartmentId = department.Id;
                 _dbRepository.UpdateStudent(studentToUpdate);
@@ -94,8 +83,8 @@ namespace Egzaminas
             var department = _dbRepository.GetDepartmentFromLectures(departmentName);
             if(department is null)
             {
-                Console.Write("No such department, Enter name: ");
-                var tempDepartmentName = Console.ReadLine();
+                
+                var tempDepartmentName = Helper.GetStringInput("No such department, Enter name: ");
                 CreateDepartment(departmentName);
                 department = _dbRepository.GetDepartmentFromLectures(departmentName);
                 

@@ -11,12 +11,12 @@ namespace Egzaminas
         public Controller()
         {
             Menu();
+            
         }
         private void Menu()
         {
 
             var schoolService = new SchoolService();
-            
             while (true)
             {
                 Console.WriteLine("" +
@@ -34,40 +34,42 @@ namespace Egzaminas
                 {
                     case 1:
 
-                        var departmentName = GetStringInput("(Create)Department Name ");
+                        var departmentName = Helper.GetStringInput("(Create)Department Name ");
                         schoolService.CreateDepartment(departmentName);
-                        schoolService.AddStudentToDepartment(departmentName, GetStringInput("Student Name"));
-                        schoolService.AddLectureToDepartment(departmentName, GetStringInput("Lecture Name"));
+                        schoolService.AddStudentToDepartment(departmentName, Helper.GetStringInput("Student Name"));
+                        schoolService.AddLectureToDepartment(departmentName, Helper.GetStringInput("Lecture Name"));
                         break;
                     case 2:
-                        schoolService.AddStudentToDepartment(GetStringInput("Department Name"), GetStringInput("Student Name"));
+                        var DepartmentName2 = Helper.GetStringInput("Department Name");
+                        schoolService.AddStudentToDepartment(DepartmentName2, Helper.GetStringInput("Student Name"));
+                        schoolService.AddLectureToDepartment(DepartmentName2, Helper.GetStringInput("Lecture Name"));
 
                         break;
                     case 3:
-                        schoolService.AddLectureToDepartment(GetStringInput("Department Name"), GetStringInput("Lecture Name"));
+                        schoolService.AddLectureToDepartment(Helper.GetStringInput("Department Name"), Helper.GetStringInput("Lecture Name"));
 
                         break;
                     case 4:
-                        var studentName4 = GetStringInput("Student Name");
-                        var departmentName4 = GetStringInput("Department Name");
+                        var studentName4 = Helper.GetStringInput("Student Name");
+                        var departmentName4 = Helper.GetStringInput("Department Name");
                         schoolService.AddStudent(studentName4);
                         schoolService.AssignStudentToDepartment(studentName4, departmentName4);
                         schoolService.AssignLectturesToStudentFromDepartment(studentName4, departmentName4);
 
                         break;
                     case 5:
-                        var studentName5 = GetStringInput("Student Name");
-                        var DepartmentName5 = GetStringInput("Department Name");
+                        var studentName5 = Helper.GetStringInput("Student Name");
+                        var DepartmentName5 = Helper.GetStringInput("Department Name");
                         schoolService.MoveStudentToDepartment(studentName5, DepartmentName5);
                         schoolService.AssignLectturesToStudentFromDepartment(studentName5, DepartmentName5);
 
                         break;
                     case 6:
-                        schoolService.ShowAllStudentsForDepartment(GetStringInput("Department Name"));
+                        schoolService.ShowAllStudentsForDepartment(Helper.GetStringInput("Department Name"));
 
                         break;
                     case 7:
-                        schoolService.ShowAllLecturesForDepartment(GetStringInput("Department Name"));
+                        schoolService.ShowAllLecturesForDepartment(Helper.GetStringInput("Department Name"));
 
                         break;
                     case 8:
@@ -84,10 +86,6 @@ namespace Egzaminas
             }
             
         }
-        private string GetStringInput(string text)
-        {
-            Console.Write($"{text}:");
-            return Console.ReadLine();
-        }
+        
     }
 }
