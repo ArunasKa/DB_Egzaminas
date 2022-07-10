@@ -40,7 +40,7 @@ namespace Egzaminas
             return lectures2;
         }
 
-        private Department GetDepartment(string departmentName)
+        public Department GetDepartment(string departmentName)
         {
             return _context.Departments.FirstOrDefault(s => s.Name.ToUpper() == departmentName.ToUpper());
         }
@@ -72,6 +72,13 @@ namespace Egzaminas
         {
             return _context.Students.FirstOrDefault(s => s.Id == studentId);
         }
+
+        public void AssignDepartmentToStudent(string studentName, string departmentName)
+        {
+            var department = GetDepartment(departmentName);
+            _context.Students.Single(s => s.Name == studentName).DepartmentId = department.Id;
+        }
+
         public Lecture GetLecture(string lectureName)
         {
             return _context.Lectures.FirstOrDefault(s => s.Name.ToUpper() == lectureName.ToUpper());
@@ -80,6 +87,7 @@ namespace Egzaminas
         {
             var student = GetStudent(studentName);
             _context.Students.Remove(student);
+            _context.SaveChanges();
             //_context.Lectures.Select(l => l.Students.RemoveAll(s => s.Id.Equals(student.Id)));
         }
         public void UpdateDepartment(Department department)

@@ -16,8 +16,7 @@ namespace Egzaminas
         {
 
             var schoolService = new SchoolService();
-            //schoolService.AddLecture(GetStringInput("Lecture Name"));
-            schoolService.AddStudent("Student_Name_4");
+            
             while (true)
             {
                 Console.WriteLine("" +
@@ -34,12 +33,11 @@ namespace Egzaminas
                 switch (int.Parse(Console.ReadLine()))
                 {
                     case 1:
-                        
-                        schoolService.CreateDepartment(GetStringInput("(Create)Department Name "));
-                        Console.WriteLine("Add student to department");
-                        schoolService.AddStudentToDepartment(GetStringInput("Department Name"), GetStringInput("Student Name"));
-                        Console.WriteLine("Add lecture to department");
-                        schoolService.AddLectureToDepartment(GetStringInput("Department Name"), GetStringInput("Lecture Name"));
+
+                        var departmentName = GetStringInput("(Create)Department Name ");
+                        schoolService.CreateDepartment(departmentName);
+                        schoolService.AddStudentToDepartment(departmentName, GetStringInput("Student Name"));
+                        schoolService.AddLectureToDepartment(departmentName, GetStringInput("Lecture Name"));
                         break;
                     case 2:
                         schoolService.AddStudentToDepartment(GetStringInput("Department Name"), GetStringInput("Student Name"));
@@ -50,9 +48,11 @@ namespace Egzaminas
 
                         break;
                     case 4:
-                        var studentName = GetStringInput("Student Name");
-                        schoolService.CreateStudent(studentName);
-                        schoolService.AssignLectturesToStudentFromDepartment(studentName, GetStringInput("Department Name"));
+                        var studentName4 = GetStringInput("Student Name");
+                        var departmentName4 = GetStringInput("Department Name");
+                        schoolService.AddStudent(studentName4);
+                        schoolService.AssignStudentToDepartment(studentName4, departmentName4);
+                        schoolService.AssignLectturesToStudentFromDepartment(studentName4, departmentName4);
 
                         break;
                     case 5:
