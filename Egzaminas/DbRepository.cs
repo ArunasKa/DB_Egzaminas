@@ -1,10 +1,11 @@
 ﻿using Egzaminas.Entities;
+using Egzaminas.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace Egzaminas
 {
-    public class DbRepository
+    public class DbRepository : IRepository
     {
         private readonly SchoolDbContext _context;
         public DbRepository()
@@ -88,7 +89,6 @@ namespace Egzaminas
             var student = GetStudent(studentName);
             _context.Students.Remove(student);
             _context.SaveChanges();
-            //_context.Lectures.Select(l => l.Students.RemoveAll(s => s.Id.Equals(student.Id)));
         }
         public void UpdateDepartment(Department department)
         {

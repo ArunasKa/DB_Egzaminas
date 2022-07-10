@@ -1,8 +1,9 @@
 ﻿using Egzaminas.Entities;
+using Egzaminas.Interfaces;
 
 namespace Egzaminas
 {
-    public class SchoolService
+    public class SchoolService : ISchoolService
     {
         private readonly DbRepository _dbRepository;
 
