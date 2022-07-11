@@ -13,7 +13,7 @@ namespace Egzaminas.Interfaces
         void ShowAllLecturesForDepartment(string departmentName);
         void ShowAllStudentsForDepartment(string departmentName);
         void ShowAllLecturesForStudent(Guid studentId);
-        void AddStudentToDepartment(string studentName, string departmentName);
+        void AddStudentToDepartment(string departmentName, string studentName);
         void AssignStudentToDepartment(string studentName, string departmentName);
         void MoveStudentToDepartment(string studentName, string DepartmentName);
         void AssignLectturesToStudentFromDepartment(string studentName, string departmentName);

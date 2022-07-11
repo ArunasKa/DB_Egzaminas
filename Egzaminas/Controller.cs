@@ -73,7 +73,7 @@ namespace Egzaminas
 
                         break;
                     case 8:
-                        schoolService.ShowAllLecturesForStudent(Guid.Parse("6638C1D3-1097-4502-BC62-08DA5EA82164"));
+                        schoolService.ShowAllLecturesForStudent(Guid.Parse(Helper.GetStringInput("Student Id ")));
 
                         break;
                     case 9:

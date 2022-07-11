@@ -10,6 +10,10 @@ namespace Egzaminas
         public SchoolService()
         {
             _dbRepository = new DbRepository();
+            //_dbRepository.AddLecture(new Lecture("Lecture_Name_1"));
+            //_dbRepository.AddDepartment(new Department("Department_Name_1"));
+            //_dbRepository.AddStudent(new Student("Student_Name_1"));
+            //_dbRepository.SaveChanges();
         }
 
         public void CreateDepartment(string name)
@@ -70,7 +74,7 @@ namespace Egzaminas
         public void MoveStudentToDepartment( string studentName, string DepartmentName)
         {
             _dbRepository.DeleteStudent(studentName);
-            AddStudentToDepartment(studentName, DepartmentName);
+            AddStudentToDepartment(DepartmentName, studentName);
         }
         public void AssignLectturesToStudentFromDepartment(string studentName, string departmentName)
         {

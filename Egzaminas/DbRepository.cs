@@ -38,12 +38,10 @@ namespace Egzaminas
             var lectures = _context.Lectures.Where(l => l.Departments.Any(d=>d.Id.Equals(department.Id))).ToList();
             return lectures;
         }
-
         public Department GetDepartment(string departmentName)
         {
             return _context.Departments.FirstOrDefault(s => s.Name.ToUpper() == departmentName.ToUpper());
         }
-
         public List<Student> GetAllStudentsForDepartment(string departmentName)
         {
 
@@ -54,6 +52,7 @@ namespace Egzaminas
         public List<Lecture> GetAllLecturesForStudent(Guid studentId)
         {
             return _context.Lectures.Where(l => l.Students.All(d => d.Id.Equals(studentId))).ToList();
+
         }
         public Lecture GetLectureFromStudents(string lectureName)
         {
@@ -71,13 +70,11 @@ namespace Egzaminas
         {
             return _context.Students.FirstOrDefault(s => s.Id == studentId);
         }
-
         public void AssignDepartmentToStudent(string studentName, string departmentName)
         {
             var department = GetDepartment(departmentName);
             _context.Students.Single(s => s.Name == studentName).DepartmentId = department.Id;
         }
-
         public Lecture GetLecture(string lectureName)
         {
             return _context.Lectures.FirstOrDefault(s => s.Name.ToUpper() == lectureName.ToUpper());
