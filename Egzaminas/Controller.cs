@@ -11,7 +11,7 @@ namespace Egzaminas
         public Controller()
         {
             Menu();
-            
+
         }
         private void Menu()
         {
@@ -35,9 +35,12 @@ namespace Egzaminas
                     case 1:
 
                         var departmentName = Helper.GetStringInput("(Create)Department Name ");
+                        var studentName = Helper.GetStringInput("Student Name");
+                        var lectureName = Helper.GetStringInput("Lecture Name");
                         schoolService.CreateDepartment(departmentName);
-                        schoolService.AddStudentToDepartment(departmentName, Helper.GetStringInput("Student Name"));
-                        schoolService.AddLectureToDepartment(departmentName, Helper.GetStringInput("Lecture Name"));
+                        schoolService.AddLectureToDepartment(departmentName, lectureName);
+                        schoolService.AddStudentToDepartment(departmentName, studentName);
+                        schoolService.AssignLectturesToStudentFromDepartment(studentName, departmentName);
                         break;
                     case 2:
                         var DepartmentName2 = Helper.GetStringInput("Department Name");
@@ -84,8 +87,8 @@ namespace Egzaminas
                         break;
                 }
             }
-            
+
         }
-        
+
     }
 }
