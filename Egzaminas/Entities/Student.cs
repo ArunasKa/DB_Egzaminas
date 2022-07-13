@@ -11,6 +11,7 @@ namespace Egzaminas.Entities
 
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string LastName { get; set; }
         public List<Lecture> Lectures { get; set; }
         public Guid? DepartmentId { get; set; }
     }
